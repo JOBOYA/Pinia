@@ -23,7 +23,7 @@ getters: {
 actions: {
     async getTasks() {
         this.loading = true
-        const res = await fetch('https://pinia-tasks-5a7e0f74cfbe.herokuapp.com/tasks')
+        const res = await fetch('http://localhost:3000/tasks')
         const data = await res.json()
 
         this.tasks = data
@@ -32,7 +32,7 @@ actions: {
     async addTask(task) {
         this.tasks.push(task)
 
-        const res = await fetch('https://pinia-tasks-5a7e0f74cfbe.herokuapp.com/tasks/', {
+        const res = await fetch('http://localhost:3000/tasks/', {
             method: 'POST',
             body: JSON.stringify(task),
             headers: {
@@ -48,7 +48,7 @@ actions: {
             return t.id !== id
         })
 
-        const res = await fetch('https://pinia-tasks-5a7e0f74cfbe.herokuapp.com/tasks/' + id , {
+        const res = await fetch('http://localhost:3000/tasks/' + id , {
             method: 'DELETE',
         })
         if(res.error) {
@@ -59,7 +59,7 @@ actions: {
        const task = this.tasks.find(t => t.id === id)
          task.isFav = !task.isFav
 
-         const res = await fetch('https://pinia-tasks-5a7e0f74cfbe.herokuapp.com/tasks/' + id , {
+         const res = await fetch('http://localhost:3000/tasks/' + id , {
             method: 'PATCH',
             body: JSON.stringify({isFav: task.isFav}),
             headers: {
