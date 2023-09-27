@@ -23,22 +23,29 @@ getters: {
 actions: {
     async getTasks() {
         this.loading = true
-        const res = await fetch('http://localhost:3000/tasks')
+        const res = await fetch('https://pinia-tasks-1a68c746362c.herokuapp.com//tasks/')
         const data = await res.json()
+
+      
 
         this.tasks = data
         this.loading = false
     },
     async addTask(task) {
+        console.log(typeof this.tasks); // Doit afficher "object"
+        console.log(Array.isArray(this.tasks)); // Doit afficher "true"
         this.tasks.push(task)
 
-        const res = await fetch('http://localhost:3000/tasks/', {
+        const res = await fetch('https://pinia-tasks-1a68c746362c.herokuapp.com//tasks/', {
             method: 'POST',
             body: JSON.stringify(task),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
+        
+        
+
         if(res.error) {
            console.log(res.error)
         }
@@ -48,7 +55,7 @@ actions: {
             return t.id !== id
         })
 
-        const res = await fetch('http://localhost:3000/tasks/' + id , {
+        const res = await fetch('https://pinia-tasks-1a68c746362c.herokuapp.com//tasks/' + id , {
             method: 'DELETE',
         })
         if(res.error) {
@@ -59,7 +66,7 @@ actions: {
        const task = this.tasks.find(t => t.id === id)
          task.isFav = !task.isFav
 
-         const res = await fetch('http://localhost:3000/tasks/' + id , {
+         const res = await fetch('https://pinia-tasks-1a68c746362c.herokuapp.com//tasks/' + id , {
             method: 'PATCH',
             body: JSON.stringify({isFav: task.isFav}),
             headers: {
