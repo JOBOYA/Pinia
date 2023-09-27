@@ -4,7 +4,8 @@ import { defineStore } from 'pinia'
 export const useTaskStore = defineStore('taskStore', {
 state: () => ({
 tasks: [],
-loading : false
+loading : false,
+
 }),
 getters: { 
     favs() {
@@ -62,20 +63,24 @@ actions: {
            console.log(res.error)
         }
     },
+   
     async toggleFav(id) {
-       const task = this.tasks.find(t => t.id === id)
-         task.isFav = !task.isFav
-
-         const res = await fetch('https://pinia-tasks-1a68c746362c.herokuapp.com/tasks/' + id , {
-            method: 'PATCH',
-            body: JSON.stringify({isFav: task.isFav}),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        if(res.error) {
-           console.log(res.error)
+        const task = this.tasks.find(t => t.id === id);
+        task.isFav = !task.isFav;
+        
+        const res = await fetch('https://pinia-tasks-1a68c746362c.herokuapp.com/tasks/' + id, {
+          method: 'PATCH',
+          body: JSON.stringify({ isFav: task.isFav }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+            
+        });
+      
+        if (res.error) {
+          console.log(res.error);
         }
-    }
+       
+      }
 }
-})
+})      
